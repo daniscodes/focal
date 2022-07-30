@@ -31,9 +31,12 @@ const library = {
 // p01: Coding Music - 2 tracks
 // p02: Other Playlist - 1 tracks
 const printPlaylists = function() {
-
+for (let each in library.playlists){
+       console.log(`${library.playlists[each].id}: ${library.playlists[each].name} - ${library.playlists[each].tracks.length} tracks`);
 }
+};
 
+console.log(printPlaylists(library))
 
 // prints a list of all tracks, using the following format:
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
