@@ -49,19 +49,42 @@ const printTracks = function() {
 }
 
 console.log(printTracks(library))
+
 // prints a list of tracks for a given playlist, using the following format:
 // p01: Coding Music - 2 tracks
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 const printPlaylist = function(playlistId) {
+  let objectKeys = Object.keys(library.playlists);
+  for (key of objectKeys) {
+    if (key === playlistId) {
+      let playlistTracks = Object.values(library.playlists[key].tracks);
+      // console.log(playlistTracks);
+      console.log(`${key}: ${library.playlists[key].name} - ${library.playlists[key].tracks.length} tracks`);
+      for (track of playlistTracks) {
+        console.log(`${track}: ${library.tracks[track].name} by ${library.tracks[track].artist} \(${library.tracks[track].album}\)`);
+      }
+    }
+  }
+};
 
-}
-
+console.log(printPlaylist(library))
 
 // adds an existing track to an existing playlist
 const addTrackToPlaylist = function(trackId, playlistId) {
+  const trackKeys = Object.keys(library.tracks);
+  const playlistKeys = Object.keys(library.playlists);
+  // console.log(trackKeys, playlistID)
+  if (trackId in library.tracks && playlistId in library.playlists) {
+    // console.log(library.playlists[playlistId].tracks)
+    library.playlists[playlistId].tracks.push(trackId);
+    // console.log(library.playlists); //ASK why when I take log library by itself, it doesn't work. Has to be library.playlists
+  } else {
+    return console.log("Track or Playlist does not exist");
+  }
+};
 
-}
+addTrackToPlaylist('t02', 'p02');
 
 
 // generates a unique id
@@ -73,8 +96,13 @@ const generateUid = function() {
 
 // adds a track to the library
 const addTrack = function(name, artist, album) {
-
-}
+  const newTrack = generateUid();
+  library.tracks[newTrack] = {
+    name: name,
+    artist: artist,
+    album: album
+  };
+};
 
 
 // adds a playlist to the library
